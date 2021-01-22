@@ -32,7 +32,15 @@ build/Release
 
 # Dependency directories
 node_modules
+run-word/node_modules
+run-tangible/node_modules
 jspm_packages
+lib
+privatekey.pem 
+certificate.pem
+key.pem
+cert.pem
+.env
 
 # Optional npm cache directory
 .npm
