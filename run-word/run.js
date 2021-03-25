@@ -2,6 +2,8 @@
 //const Phaser = require('phaser');
 // import Phaser from 'phaser';
 
+let URLWord = 'https://localhost:8080';
+
 let ejecution = false;
 
 const avanzar = 'forward';
@@ -81,8 +83,8 @@ const velY = 97;
 
 const config = {
     type: Phaser.AUTO, //intenta utilizar WebGL automáticamente
-    width: 1000,
-    height: 600,
+    width: 1155,
+    height: 575,
     physics: {
         default: 'arcade',
         arcade: {
@@ -117,10 +119,15 @@ let dirAgente = {
     velY: 0
 };
 
+
+let contStart = 0;
+let scoreText;
+
 function preload() {
-    this.load.setBaseURL('https://localhost:8081');
-    // cargamos fondo
-    this.load.image('fondo', 'assets/fondo/fondoCuadricula2.png');
+    this.load.setBaseURL(URLWord);
+    // cargamos fondo y demás imágenes de objetos estáticos del mundo
+    this.load.image('fondo', 'assets/fondo/fondoCuadricula3.png');
+    this.load.image('star', 'assets/elementos/star.png');
     // cargamos sprite rana para giros
     this.load.spritesheet(turn_down_left, 'assets/spritesheets/rana/giro_abajo_izquierda.png', { frameWidth: 85, frameHeight: 79 });
     this.load.spritesheet(turn_up_right, 'assets/spritesheets/rana/giro_arriba_derecha.png', { frameWidth: 85, frameHeight: 79 });
@@ -158,13 +165,91 @@ const setOrientacion = async function (newMov) {
                     setDireccion(0, 0, '');
 }
 
+const randomPos = (initObj, step, initR, finR) => initObj + step * (Phaser.Math.Between(initR, finR));
+
+
+// async function posXYGenerate(arrayObj, initObj) {
+// let x = randomPos(initObj.x, velX, 1, 11); // ver!!! 11 podria ser el div de ancho mundo
+// let y = randomPos(initObj.y, velY, 1, 5);
+//     let pos = { x, y };
+//     let posFound;
+//     console.log(arrayObj, pos);
+//     // let array = arrayObj.map(async obj => {
+//     //     // console.log(obj, x, y);
+
+//     //     if ((obj.x === x && obj.y === y)) {
+//     //         console.log("objeto encontrado repetido!!!")
+//     //         posFound = obj; //await posXYGenerate(arrayObj, initObj);
+//     //         pos = await posXYGenerate(arrayObj, initObj);
+//     //     }
+//     //     return obj;
+//     // });
+//     // Promise.all(array);
+//     posFound = await arrayObj.find(p => p.x === x && p.y === y);
+//     // console.log(posFound);
+//     if (posFound) {
+//         console.log("genera pos nueva => (", x, ", ", y, ")");
+//         return await posXYGenerate(arrayObj, initObj);
+//     }
+
+//     return pos;
+// }
+
+function collectStar(player, star) {
+    contStart++;
+    console.log("contStart => ", contStart);
+    star.disableBody(true, true);
+    scoreText.setText('Puntos: ' + contStart);
+}
+
 async function create() {
-    this.add.image(600, 300, 'fondo');
+    this.add.image(600, 275, 'fondo');
+
     // create player
-    player = this.physics.add.sprite(60, 500, mov_up);
+    player = this.physics.add.sprite(50, 560, mov_up);
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
     setOrientacion(mov_up);
+
+    // ---- Creamos objetos estáticos del mundo --------- 
+    // creamos estrellas
+    const initObj = { x: 50, y: 50 };
+    let stars = this.physics.add.group({
+        key: 'star',
+        repeat: 9,
+        setXY: {
+            x: initObj.x,
+            y: initObj.y
+        }
+    });
+    let posiciones = [
+        { x: 1, y: 2 },
+        { x: 4, y: 3 },
+        { x: 5, y: 4 },
+        { x: 0, y: 2 },
+        { x: 8, y: 4 },
+        { x: 7, y: 4 },
+        { x: 7, y: 5 },
+        { x: 3, y: 5 },
+        { x: 8, y: 1 },
+        { x: 10, y: 5 }
+    ];
+
+    let arrayPos = posiciones.map(pos => ({ x: initObj.x + velX * pos.x, y: initObj.y + velY * pos.y }));
+    //    this.physics.add.collider(stars, stars);
+    stars.getChildren().forEach((star, index) => {
+        star.setCollideWorldBounds(true);
+        // let pos = { x: star.x + velX, y: star.y + velY };// await posXYGenerate(arrayPos, initObj);
+        //  arrayPos.push(pos);
+        star.x = arrayPos[index].x;
+        star.y = arrayPos[index].y;
+        console.log(star.x, star.y);
+    });
+    this.physics.add.overlap(player, stars, collectStar, null, this);
+
+    // creamos el objeto que muestra el puntaje
+    scoreText = this.add.text(16, 16, 'Puntos: 0', { fontSize: '28px', fill: '#000' });
+
     // player.direccion = direccion;
     // cantidad de imagenes en lineSprite para movimiento 'walk'
 
