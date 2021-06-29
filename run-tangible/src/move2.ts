@@ -1,14 +1,11 @@
-//require("@babel/register")({ extensions: ['.js', '.ts'] });
-//import "@babel/runtime-corejs2";
-//import "@babel/runtime";
-//import "regenerator-runtime/runtime";
-//import "core-js/stable";
-//import { JsonGenerator } from "./json-generator";
+
 import { IMove } from './IMove';
+
 
 const imgNotFound = "./assets/img/imagen_no_disponible.jpeg";
 let jsonMoves: IMove[] = [];
 let URLWord = 'https://localhost:8080';
+let nameWord = '1';
 
 let moves: string[] = [];
 let movesJson: IMove[] = []; //despues definir array de IMove
@@ -22,6 +19,10 @@ const backward = 'backward';
 const turnRight = 'turn-right';
 const turnLeft = 'turn-left';
 
+// prbando contenido camera
+// let elem: any = document.querySelector('a-entity[camera]');
+// var camera = elem ? elem.components.camera.camera : null;
+// console.log("Camera => ", elem, camera);
 
 export async function generarMovimiento(dato: string) {
   //por cada marcador que es capturado ingresa
@@ -111,15 +112,14 @@ export function cleanViewImages() {
     moves = [];
     console.log("arrayImage: ", arrayImage, moves);
     // ver  de deshabilitar el boton cuando se borren todas las imágenes o al inicio
-    // borrar el contenido del arrray de movimientos
+    // borrar el contenido del array de movimientos
   } else {
     console.log("no hay imagenes");
   }
 }
 
 async function createJson() {
-  moves.forEach((mov, index, moves) => {  // podría ser un map
-    //  console.log(mov, index);
+  moves.forEach((mov, index, moves) => {
     jsonMoves.push({
       id: index,
       move: mov,
@@ -130,8 +130,14 @@ async function createJson() {
 }
 
 export async function playProgramContext() {
-  alert("Programa Generado correctamente");
-  console.log("Programa leído correctamente");
-  await createJson();
-  location.href = URLWord + '?moves=' + JSON.stringify(jsonMoves);
+  if (nameWord) {
+    alert("Programa Generado correctamente");
+    await createJson()
+    const url = `${URLWord}?moves=${JSON.stringify(jsonMoves)}&mundo=word${nameWord}`;
+    location.href = url;
+  }
+}
+export function selectWord() {
+  nameWord = (document.getElementById("selectWord") as any).value;
+
 }

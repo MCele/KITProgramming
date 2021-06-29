@@ -1,6 +1,5 @@
 
-//const Phaser = require('phaser');
-// import Phaser from 'phaser';
+let origin = location.origin;
 
 let URLWord = 'https://localhost:8080';
 
@@ -13,67 +12,62 @@ const giro_izquierda = 'turn-left';
 
 
 var params = new URLSearchParams(location.search);
-const moves = JSON.parse(params.get('moves')) || [];
-console.log(moves);
-// const moves = [
-//     {
-//         id: 0,
-//         move: avanzar
-//     },
-//     {
-//         id: 1,
-//         move: giro_derecha
 
-//     },
-//     {
-//         id: 2,
-//         move: retroceder
-//     },
-//     {
-//         id: 3,
-//         move: avanzar
-//     },
-//     {
-//         id: 4,
-//         move: giro_izquierda
-//     },
-//     {
-//         id: 5,
-//         move: avanzar
-//     },
-//     {
-//         id: 6,
-//         move: giro_izquierda
-//     },
-//     {
-//         id: 7,
-//         move: retroceder
-//     },
-//     {
-//         id: 8,
-//         move: retroceder
-//     },
-//     {
-//         id: 9,
-//         move: giro_derecha
-//     },
-//     {
-//         id: 10,
-//         move: avanzar
-//     },
-//     {
-//         id: 11,
-//         move: avanzar
-//     },
-//     {
-//         id: 12,
-//         move: giro_izquierda
-//     },
-//     {
-//         id: 13,
-//         move: retroceder
-//     },
-// ];
+const moves = JSON.parse(params.get('moves')) || [];
+
+const wordDefault = "word1";
+
+let nameWord = String(params.get('mundo')) || wordDefault;
+
+
+// URL del mundo a ejecutar
+const URLMundo = () => (`./word/${nameWord}.json`);
+const imgFondo = (newF) => (`./assets/fondo/fondo_${newF}.png`);
+
+let word;
+let fondo = imgFondo(wordDefault);
+// imgFondo(nameWord);
+
+function loadJSON() {
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open('GET', URLMundo());
+
+    xobj.onreadystatechange = function () { // si el mundo no se encuentra se precarga el mundo por defecto
+        if (xobj.readyState == 4 && xobj.status == "404" && nameWord !== wordDefault) { // evita recursividad infinita
+            nameWord = wordDefault;
+            loadJSON();
+        }
+        if (xobj.readyState == 4 && xobj.status == "200") {
+            word = JSON.parse(xobj.responseText);
+        }
+    };
+    xobj.send(null);
+}
+
+// function loadFondo() {
+//     var xobj = new XMLHttpRequest();
+//     xobj.overrideMimeType("application/json");
+//     xobj.open('GET', fondo);
+
+//     xobj.onreadystatechange = function () { // si la imagen del fondo no se encuentra se precarga el fondo por defecto
+//         if (xobj.readyState == 4 && xobj.status == "404" && nameWord !== wordDefault) { // evita recursividad infinita
+//             console.log(xobj);
+//             fondo = imgFondo(wordDefault);
+//             console.log(fondo);
+//         }
+//         if (xobj.readyState == 4 && xobj.status == "200") {
+//             fondo = imgFondo(nameWord);
+//         }
+//     };
+//     //  console.log(xobj);
+//     xobj.send(null);
+// }
+
+
+
+loadJSON();
+//loadFondo();
 
 
 let contMoves = 0;  //contamos la cantidad de movimientos realizados
@@ -126,7 +120,8 @@ let scoreText;
 function preload() {
     this.load.setBaseURL(URLWord);
     // cargamos fondo y demás imágenes de objetos estáticos del mundo
-    this.load.image('fondo', 'assets/fondo/fondoCuadricula3.png');
+    this.load.image('fondo', fondo);
+    // cargamos los elementos coleccionables
     this.load.image('star', 'assets/elementos/star.png');
     // cargamos sprite rana para giros
     this.load.spritesheet(turn_down_left, 'assets/spritesheets/rana/giro_abajo_izquierda.png', { frameWidth: 85, frameHeight: 79 });
@@ -209,34 +204,28 @@ async function create() {
     player = this.physics.add.sprite(50, 560, mov_up);
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
-    setOrientacion(mov_up);
+    await setOrientacion(mov_up);
 
-    // ---- Creamos objetos estáticos del mundo --------- 
+    // ------------ Creamos objetos estáticos del mundo --------------
+
     // creamos estrellas
     const initObj = { x: 50, y: 50 };
+
+    const posiciones = await word.posiciones;
+    console.log(" ------- posiciones => ", posiciones.length);
+    // definimos cantidad de estrellas, de acuerdo a la cantidad definida en el array del mundo elegido
     let stars = this.physics.add.group({
         key: 'star',
-        repeat: 9,
+        repeat: posiciones.length - 1,
         setXY: {
             x: initObj.x,
             y: initObj.y
         }
     });
-    let posiciones = [
-        { x: 1, y: 2 },
-        { x: 4, y: 3 },
-        { x: 5, y: 4 },
-        { x: 0, y: 2 },
-        { x: 8, y: 4 },
-        { x: 7, y: 4 },
-        { x: 7, y: 5 },
-        { x: 3, y: 5 },
-        { x: 8, y: 1 },
-        { x: 10, y: 5 }
-    ];
 
     let arrayPos = posiciones.map(pos => ({ x: initObj.x + velX * pos.x, y: initObj.y + velY * pos.y }));
     //    this.physics.add.collider(stars, stars);
+
     stars.getChildren().forEach((star, index) => {
         star.setCollideWorldBounds(true);
         // let pos = { x: star.x + velX, y: star.y + velY };// await posXYGenerate(arrayPos, initObj);
