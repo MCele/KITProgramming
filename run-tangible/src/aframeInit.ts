@@ -20,7 +20,7 @@ AFRAME.registerComponent('registerevents', {
 
             createViewImages(markerId);
             // genera movimiento(JSON)
-            generarMovimiento(markerId);
+            generarMovimiento(markerId, marker);
         });
         marker.addEventListener('markerLost', function () {
             var markerId = marker.id;
