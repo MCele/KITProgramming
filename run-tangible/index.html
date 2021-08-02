@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <title> Programación Tangible </title>
-  <meta name="description" content="Hello, World! - A-Frame">
+  <meta name="description" content="Programación Tangible">
   <link rel="stylesheet" href="./styles/bootstrap-4.4.1-dist/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script src="https://kit.fontawesome.com/509fcef705.js" crossorigin="anonymous"></script>
@@ -21,11 +21,12 @@
   <script>
     window.addEventListener('camera-init', (data) => {
       // console.log('camera-init', data);
-    })
+    });
+
     window.addEventListener('camera-error', (error) => {
       // console.log('camera-error', error);
-    })
-    var intra = 0;
+    });
+
     AFRAME.registerComponent('registerevents', {
       init: function () {
         var marker = this.el;
