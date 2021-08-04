@@ -2,134 +2,90 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <title> Programación Tangible </title>
-  <meta name="description" content="Programación Tangible">
-  <link rel="stylesheet" href="./styles/bootstrap-4.4.1-dist/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <script src="https://kit.fontawesome.com/509fcef705.js" crossorigin="anonymous"></script>
-
-  <script>var exports = {};</script>
-  <!-- <script type="text/javascript" src="/lib/words.js"></script> -->
-  <script type="text/javascript" src="/lib/move2.js"></script>
-
-  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-  <!-- <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.3/aframe/build/aframe-ar-nft.js"></script> -->
-  <!--script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.0/aframe/build/aframe-ar.js"></script-->
-  <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
-  <script>
-    window.addEventListener('camera-init', (data) => {
-      // console.log('camera-init', data);
-    });
-
-    window.addEventListener('camera-error', (error) => {
-      // console.log('camera-error', error);
-    });
-
-    AFRAME.registerComponent('registerevents', {
-      init: function () {
-        var marker = this.el;
-        //console.log('marker: ', marker);
-        marker.addEventListener('markerFound', function () { // marcador encontrado
-          var markerId = marker.id;
-
-          // Genera imagen
-          createViewImages(markerId);
-          // genera movimiento(JSON)
-          generarMovimiento(markerId, marker);
-        });
-        marker.addEventListener('markerLost', function () {
-          // evento provocado por un marcador que dejó de ser capturarado
-          var markerId = marker.id;
-          //ver si colocar un temporizador para que no detecte movimientos por unos segundos
-          console.log('marcador perdido', markerId);
-          //actualizamos atributo "scale" del objeto 3D
-          resetScale(markerId, marker);
-        });
-      }
-    });
-
-
-  </script>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+    <link rel="stylesheet" href="./styles/bootstrap-4.4.1-dist/css/bootstrap.min.css">
 </head>
+<script>
+    AFRAME.registerComponent("foo", {
+        init: function () {
+            this.el.addEventListener("click", (e) => {
+                console.log("click box");
+                document.querySelector('#agente-inicio').setAttribute('visible', false);
+                document.querySelector('#agente-play').setAttribute('visible', true);
+                document.querySelector('#agente-play').setAttribute("animation-mixer", "clip:saludo_inclinado;loop:once; clampWhenFinished:true;");
+                setTimeout(() => { console.log("tiempo"); location.href = "inicioTangible.html" }, 4000);
+            })
+        }
+    });
+</script>
 
-<body style='margin : 0px'>
-  <a-scene embedded arjs='debugUIEnabled: false' vr-mode-ui="enabled: false">
-    <!-- <a-text id="presentacionText" value="Escanee los marcadores" align="center" color="#FFF" visible="true"
-      position="0 -0.55 0.55" geometry="primitive: plane; width: 1.75" material="color: #333">
-    </a-text> -->
-    <a-marker class="marcador" url="/assets/pattern/pattern_giro_derecha.patt" type="pattern" id='turn-right'
-      registerevents>
+<body style='margin : 10px;background-color:rgba(215, 234, 235, 0.863);'>
 
-      <a-entity gltf-model='/assets/ply/scene.gltf' scale="2 2 2" position="0.1 -1 1.5" rotation="-90 -45 45"
-        crossOrigin="anonymous" animation-mixer="clip:vuelta_giro_abajo;">
-      </a-entity>
-    </a-marker>
+    <div class="d-flex justify-content-center" style="margin: 0%; page-break-after: 0%; display: inline;">
+        <img src="/assets/img/logo.png" alt="Logo KIT Programming" width="20%" height="20%" class="img-fluid mx-auto">
 
-    <a-marker class="marcador" url="/assets/pattern/pattern_flecha_arriba.patt" type="pattern" id='forward'
-      registerevents>
-
-      <a-entity gltf-model='/assets/ply/scene.gltf' scale="2 2 2" position="0.1 -1 0.5" rotation="90 -145 40"
-        crossOrigin="anonymous" animation-mixer="clip:caminar_con_algo;">
-      </a-entity>
-    </a-marker>
-
-    <a-marker class="marcador" url="/assets/pattern/pattern_flecha_abajo.patt" type="pattern" id='backward'
-      registerevents>
-
-      <a-entity gltf-model='/assets/ply/scene.gltf' scale="0.6 0.6 0.6" position="0.1 -1 0.5" rotation="90 -145 40"
-        crossOrigin="anonymous" animation-mixer="clip:caminar_con_algo;">
-      </a-entity>
-    </a-marker>
-
-    <a-marker class="marcador" url="/assets/pattern/pattern-giro_izquierda.patt" type="pattern" id='turn-left'
-      registerevents>
-
-      <a-entity gltf-model='/assets/ply/scene.gltf' scale="2 2 2" position="0.1 -1 1" rotation="25 90 -45"
-        crossOrigin="anonymous" animation-mixer="clip:vuelta_giro_abajo;">
-      </a-entity>
-    </a-marker>
+    </div>
 
     <div>
-      <!-- add a simple camera -->
-      <a-entity id="camera" camera></a-entity>
+        <a-scene outline cursor="rayOrigin: mouse" style="margin: 0%; background-color: rgba(215, 234, 235, 0.74);">
+            <a-assets>
+                <img id="botonPlay" class="img-fluid" src="/assets/img/botonPlay.png">
+            </a-assets>
+
+            <a-box src="#botonPlay" position="1 0.5 -2" rotation="0 0 0" color="rgba(215, 234, 235, 0.74)"
+                scale="1.1 0.4 0.1" metalness="0.1" foo>
+            </a-box>
+
+            <a-assets>
+                <img id="groundTexture" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png">
+            </a-assets>
+
+            <!-- LOGO RA -->
+            <a-assets>
+                <img id="logoK" class="img-fluid" src="/assets/img/logoK.png">
+                <img id="logoI" class="img-fluid" src="/assets/img/logoI.png">
+                <img id="logoT" class="img-fluid" src="/assets/img/logoT.png">
+                <img id="logoProg" class="img-fluid" src="/assets/img/logoProg.png">
+            </a-assets>
+
+            <a-box src="#logoK" position="-1.5 1.5 -2.5" scale="0.5 0.5 0.35" rotation="3 -70 0" shadow> </a-box>
+            <a-box src="#logoI" position="-0.95 1.5 -2.5" scale="0.4 0.5 0.4" rotation="2 35 0" shadow></a-box>
+            <a-box src="#logoT" position="-0.3 1.5 -2.5" scale="0.5 0.5 0.45" rotation="0 -10 0" shadow> </a-box>
+            <a-box src="#logoProg" position="-0.8 1 -2.5" scale="2 0.5 0.60" rotation="3 0 0" shadow> </a-box>
+
+            <!-- ANIMACION -->
+            <a-assets>
+                <a-asset-item id="animacion-inicio" src="/assets/ply/scene.gltf"></a-asset-item>
+            </a-assets>
+
+            <a-entity id="agente-inicio" gltf-model="#animacion-inicio" scale="1.4 1.4 1.4" position="0.7 1 -1.8"
+                rotation="0 -20 0" repeat="1" crossOrigin="anonymous"
+                animation-mixer="clip:descender_centro_brazos_abiertos;loop:once; clampWhenFinished:true"
+                attribute="direction" from="1 1 1" to="2 4 -8" shadow>
+            </a-entity>
+            <a-entity id="agente-play" gltf-model="#animacion-inicio" scale="1.4 1.4 1.4" position="0.7 1 -1.8"
+                rotation="0 -20 0" repeat="1" crossOrigin="anonymous" visible="false">
+            </a-entity>
+
+            <a-entity id="plane" geometry="primitive: plane; width: 10000; height: 10000"
+                material="color: rgba(51, 206, 141, 0.74); src: #groundTexture; repeat: 10000 10000; transparent: true; metalness: 0.1; roughness: 0.4"
+                rotation="-90 0 0">
+            </a-entity>
+
+            <a-entity light="type: ambient; color:#FFF"></a-entity>
+            <a-entity light="type: directional; color: #333" position="-1 2 0"></a-entity>
+        </a-scene>
     </div>
-  </a-scene>
-
-  <div class="d-flex p-3 mr-auto bg-secondary text-white">
-    <div class="media p-3">
-      <p id="arrayImagesElement">
-
-      </p>
-    </div>
-    <div class="p-2 ml-auto btn-group-vertical">
-      <select id="selectWord" class="custom-select" onchange="selectWord()" style="margin-bottom: 10px;">
-        <option value="" disabled selected> Seleccione...</option>
-        <option value="1">Mundo 1</option>
-        <option value="2">Mundo 2</option>
-        <option value="3">Mundo 3</option>
-        <option value="4">Mundo 4</option>
-        <option value="5">Mundo 5</option>
-      </select>
-      <button type="button" class="btn btn-success" onclick="playProgramContext()" style="margin-bottom: 10px;">
-        Ejecutar <i class="fas fa-play"></i></button>
-      <button type="button" class="btn btn-danger" onclick="cleanViewImages()" style="margin-bottom: 10px;">
-        Limpiar <i class="fas fa-trash-alt"></i></button>
-    </div>
-
-
-  </div>
-
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-    crossorigin="anonymous"></script>
-  <script src="./styles//bootstrap-4.4.1-dist/js/bootstrap.min.js"
-    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="./styles//bootstrap-4.4.1-dist/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 
 </body>
 
