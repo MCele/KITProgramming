@@ -122,17 +122,17 @@ function preload() {
     // cargamos fondo y demás imágenes de objetos estáticos del mundo
     this.load.image('fondo', fondo);
     // cargamos los elementos coleccionables
-    this.load.image('star', 'assets/elementos/star.png');
+    this.load.image('star', './assets/elementos/star.png');
     // cargamos sprite rana para giros
-    this.load.spritesheet(turn_down_left, 'assets/spritesheets/rana/giro_abajo_izquierda.png', { frameWidth: 85, frameHeight: 79 });
-    this.load.spritesheet(turn_up_right, 'assets/spritesheets/rana/giro_arriba_derecha.png', { frameWidth: 85, frameHeight: 79 });
-    this.load.spritesheet(turn_down_right, 'assets/spritesheets/rana/giro_abajo_derecha.png', { frameWidth: 85, frameHeight: 79 });
-    this.load.spritesheet(turn_up_left, 'assets/spritesheets/rana/giro_arriba_izquierda.png', { frameWidth: 85, frameHeight: 79 });
+    this.load.spritesheet(turn_down_left, './assets/spritesheets/rana/giro_abajo_izquierda.png', { frameWidth: 85, frameHeight: 79 });
+    this.load.spritesheet(turn_up_right, './assets/spritesheets/rana/giro_arriba_derecha.png', { frameWidth: 85, frameHeight: 79 });
+    this.load.spritesheet(turn_down_right, './assets/spritesheets/rana/giro_abajo_derecha.png', { frameWidth: 85, frameHeight: 79 });
+    this.load.spritesheet(turn_up_left, './assets/spritesheets/rana/giro_arriba_izquierda.png', { frameWidth: 85, frameHeight: 79 });
     // cargamos sprite rana para movimientos de avanzar
-    this.load.spritesheet(mov_up, 'assets/spritesheets/rana/mov_arriba.png', { frameWidth: 85, frameHeight: 79 });
-    this.load.spritesheet(mov_down, 'assets/spritesheets/rana/mov_abajo.png', { frameWidth: 85, frameHeight: 79 });
-    this.load.spritesheet(mov_right, 'assets/spritesheets/rana/mov_derecha.png', { frameWidth: 85, frameHeight: 79 });
-    this.load.spritesheet(mov_left, 'assets/spritesheets/rana/mov_izquierda.png', { frameWidth: 85, frameHeight: 79 });
+    this.load.spritesheet(mov_up, './assets/spritesheets/rana/mov_arriba.png', { frameWidth: 85, frameHeight: 79 });
+    this.load.spritesheet(mov_down, './assets/spritesheets/rana/mov_abajo.png', { frameWidth: 85, frameHeight: 79 });
+    this.load.spritesheet(mov_right, './assets/spritesheets/rana/mov_derecha.png', { frameWidth: 85, frameHeight: 79 });
+    this.load.spritesheet(mov_left, './assets/spritesheets/rana/mov_izquierda.png', { frameWidth: 85, frameHeight: 79 });
 
 }
 
