@@ -59,26 +59,26 @@
     <a-assets>
       <img id="groundTexture" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png">
     </a-assets>
-    <a-marker class="marcador" url="/assets/pattern/pattern_giro_derecha.patt" type="pattern" id='turn-right'
+    <a-marker class="marcador" url="./assets/pattern/pattern_giro_derecha.patt" type="pattern" id='turn-right'
       registerevents>
 
-      <a-entity gltf-model='/assets/ply/scene.gltf' scale="2 2 2" position="0.1 -1 1.5" rotation="-90 -45 45"
+      <a-entity gltf-model='./assets/ply/scene.gltf' scale="2 2 2" position="0.1 -1 1.5" rotation="-90 -45 45"
         crossOrigin="anonymous" animation-mixer="clip:vuelta_giro_abajo;clampWhenFinished:true">
       </a-entity>
     </a-marker>
 
-    <a-marker class="marcador" url="/assets/pattern/pattern-giro_izquierda.patt" type="pattern" id='turn-left'
+    <a-marker class="marcador" url="./assets/pattern/pattern-giro_izquierda.patt" type="pattern" id='turn-left'
       registerevents>
 
-      <a-entity gltf-model='/assets/ply/scene.gltf' scale="2 2 2" position="0.1 -1 1" rotation="25  -45"
+      <a-entity gltf-model='./assets/ply/scene.gltf' scale="2 2 2" position="0.1 -1 1" rotation="25  -45"
         crossOrigin="anonymous" animation-mixer="clip:vuelta_giro_abajo;timeScale:-1">
       </a-entity>
     </a-marker>
 
-    <a-marker class=" marcador" url="/assets/pattern/pattern_flecha_arriba.patt" type="pattern" id='forward'
+    <a-marker class=" marcador" url="./assets/pattern/pattern_flecha_arriba.patt" type="pattern" id='forward'
       registerevents>
 
-      <a-entity gltf-model='/assets/ply/scene.gltf' scale="2 2 2" position="0.1 -1 0.5" rotation="90 -145 40"
+      <a-entity gltf-model='./assets/ply/scene.gltf' scale="2 2 2" position="0.1 -1 0.5" rotation="90 -145 40"
         crossOrigin="anonymous" animation-mixer="clip:caminar_con_algo;">
       </a-entity>
       <!-- <a-entity id="plane" geometry="primitive: plane; width: 5; height: 5"
@@ -87,10 +87,10 @@
       </a-entity> -->
     </a-marker>
 
-    <a-marker class="marcador" url="/assets/pattern/pattern_flecha_abajo.patt" type="pattern" id='backward'
+    <a-marker class="marcador" url="./assets/pattern/pattern_flecha_abajo.patt" type="pattern" id='backward'
       registerevents>
 
-      <a-entity gltf-model='/assets/ply/scene.gltf' scale="0.6 0.6 0.6" position="0.1 -1 0.5" rotation="90 -145 40"
+      <a-entity gltf-model='./assets/ply/scene.gltf' scale="0.6 0.6 0.6" position="0.1 -1 0.5" rotation="90 -145 40"
         crossOrigin="anonymous" animation-mixer="clip:caminar_con_algo;timeScale:-1">
       </a-entity>
     </a-marker>
