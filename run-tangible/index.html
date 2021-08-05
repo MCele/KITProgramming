@@ -23,14 +23,14 @@
 <body style='margin : 10px;background-color:rgba(215, 234, 235, 0.863);'>
 
     <div class="d-flex justify-content-center" style="margin: 0%; page-break-after: 0%; display: inline;">
-        <img src="/assets/img/logo.png" alt="Logo KIT Programming" width="20%" height="20%" class="img-fluid mx-auto">
+        <img src="./assets/img/logo.png" alt="Logo KIT Programming" width="20%" height="20%" class="img-fluid mx-auto">
 
     </div>
 
     <div>
         <a-scene outline cursor="rayOrigin: mouse" style="margin: 0%; background-color: rgba(215, 234, 235, 0.74);">
             <a-assets>
-                <img id="botonPlay" class="img-fluid" src="/assets/img/botonPlay.png">
+                <img id="botonPlay" class="img-fluid" src="./assets/img/botonPlay.png">
             </a-assets>
 
             <a-box src="#botonPlay" position="1 0.5 -2" rotation="0 0 0" color="rgba(215, 234, 235, 0.74)"
@@ -43,10 +43,10 @@
 
             <!-- LOGO RA -->
             <a-assets>
-                <img id="logoK" class="img-fluid" src="/assets/img/logoK.png">
-                <img id="logoI" class="img-fluid" src="/assets/img/logoI.png">
-                <img id="logoT" class="img-fluid" src="/assets/img/logoT.png">
-                <img id="logoProg" class="img-fluid" src="/assets/img/logoProg.png">
+                <img id="logoK" class="img-fluid" src="./assets/img/logoK.png">
+                <img id="logoI" class="img-fluid" src="./img/logoI.png">
+                <img id="logoT" class="img-fluid" src="./img/logoT.png">
+                <img id="logoProg" class="img-fluid" src="./img/logoProg.png">
             </a-assets>
 
             <a-box src="#logoK" position="-1.5 1.5 -2.5" scale="0.5 0.5 0.35" rotation="3 -70 0" shadow> </a-box>
@@ -56,7 +56,7 @@
 
             <!-- ANIMACION -->
             <a-assets>
-                <a-asset-item id="animacion-inicio" src="/assets/ply/scene.gltf"></a-asset-item>
+                <a-asset-item id="animacion-inicio" src="./ply/scene.gltf"></a-asset-item>
             </a-assets>
 
             <a-entity id="agente-inicio" gltf-model="#animacion-inicio" scale="1.4 1.4 1.4" position="0.7 1 -1.8"
