@@ -57,9 +57,7 @@ var scaleInit = [
     { name: backward, valor: { x: 0.6, y: 0.6, z: 0.6 } },
     { name: forward, valor: { x: 2, y: 2, z: 2 } }
 ];
-// const positionInit = { x: 0.1, y: -1, z: 1.5 };
-//{ name: forward, valor: { x: 2, y: 2, z: 2 } }
-// prbando contenido camera
+// probando contenido camera
 // let elem: any = document.querySelector('a-entity[camera]');
 // var camera = elem ? elem.components.camera.camera : null;
 // console.log("Camera => ", elem, camera);
@@ -121,44 +119,14 @@ function getObjectOfParent(parent, nameObj) {
 exports.getObjectOfParent = getObjectOfParent;
 function moveAgenteAR(entityAR, nameMove) {
     var scale = entityAR.getAttribute('scale');
-    //let position = entityAR.getAttribute('position');
-    console.log('scale => ', scale);
+    // console.log('scale => ', scale);
     // console.log('rotation => ', entityAR.getAttribute('rotation'));
     // console.log('position => ', entityAR.getAttribute('position'));
-    // if ([forward].includes(nameMove)) {
-    //   let cantPasos = 0;
-    //   let time = 300;
-    //   let interval = setInterval(() => {
-    //     let valor = (nameMove === forward) ? - 0.3 : 0.1;
-    //     entityAR.setAttribute('position', { x: position.x, y: position.y + valor, z: position.z + valor });
-    //     console.log('position => ', entityAR.getAttribute('position'))
-    //     // console.log('set scale 2 => ', entityAR.getAttribute('scale'));
-    //     cantPasos++;
-    //     // console.log("cantPasos: ", cantPasos);
-    //     if (cantPasos > 4000 / time) {
-    //       clearInterval(interval);
-    //     }
-    //   }, time);
-    // }
-    // if ([backward].includes(nameMove)) {
-    //   let cantPasos = 0;
-    //   let time = 300;
-    //   let interval = setInterval(() => {
-    //     let valor = (nameMove === forward) ? - 0.1 : 0.1;
-    //     entityAR.setAttribute('scale', { x: scale.x + valor, y: scale.y + valor, z: scale.z + valor });
-    //     console.log('set scale 2 => ', entityAR.getAttribute('scale'));
-    //     cantPasos++;
-    //     // console.log("cantPasos: ", cantPasos);
-    //     if (cantPasos > 4000 / time) {
-    //       clearInterval(interval);
-    //     }
-    //   }, time);
-    // }
-    if ([forward, backward].includes(nameMove)) {
+    if ([backward].includes(nameMove)) {
         var cantPasos_1 = 0;
         var time_1 = 300;
         var interval_1 = setInterval(function () {
-            var valor = (nameMove === forward) ? -0.08 : 0.08;
+            var valor = (nameMove === forward) ? -0.1 : 0.1;
             entityAR.setAttribute('scale', { x: scale.x + valor, y: scale.y + valor, z: scale.z + valor });
             // console.log('set scale 2 => ', entityAR.getAttribute('scale'));
             cantPasos_1++;
@@ -167,6 +135,20 @@ function moveAgenteAR(entityAR, nameMove) {
                 clearInterval(interval_1);
             }
         }, time_1);
+    }
+    if ([forward].includes(nameMove)) {
+        var cantPasos_2 = 0;
+        var time_2 = 300;
+        var interval_2 = setInterval(function () {
+            var valor = (nameMove === forward) ? -0.1 : 0.1;
+            entityAR.setAttribute('scale', { x: scale.x + valor, y: scale.y + valor, z: scale.z + valor });
+            // console.log('set scale 2 => ', entityAR.getAttribute('scale'));
+            cantPasos_2++;
+            // console.log("cantPasos: ", cantPasos);
+            if (cantPasos_2 > 4000 / time_2) {
+                clearInterval(interval_2);
+            }
+        }, time_2);
     }
 }
 exports.moveAgenteAR = moveAgenteAR;
@@ -247,10 +229,10 @@ function createJson() {
     return __awaiter(this, void 0, void 0, function () {
         var strJson;
         return __generator(this, function (_a) {
-            moves.forEach(function (mov, index, moves) {
+            moves.forEach(function (move, index, moves) {
                 jsonMoves.push({
                     id: index,
-                    move: mov,
+                    move: move
                 });
             });
             strJson = JSON.stringify(jsonMoves);
@@ -261,17 +243,22 @@ function createJson() {
 }
 function playProgramContext() {
     return __awaiter(this, void 0, void 0, function () {
-        var url;
+        var programLI, url, url2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (!nameWord) return [3 /*break*/, 2];
-                    alert("Programa Generado correctamente");
+                    alert("Programa Generado correctamente para ejecutarse en el Mundo " + nameWord);
                     return [4 /*yield*/, createJson()];
                 case 1:
                     _a.sent();
+                    programLI = {
+                        moves: jsonMoves,
+                        mundo: "word" + nameWord
+                    };
                     url = URLWord + "?moves=" + JSON.stringify(jsonMoves) + "&mundo=word" + nameWord;
-                    location.href = url;
+                    url2 = URLWord + "?programLI=" + JSON.stringify(programLI);
+                    location.href = url2;
                     _a.label = 2;
                 case 2: return [2 /*return*/];
             }
