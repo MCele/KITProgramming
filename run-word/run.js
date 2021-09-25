@@ -362,7 +362,10 @@ async function create() {
 
 async function update() {
     const cursors = this.input.keyboard.createCursorKeys();
-    if (cursors.right.isDown) {
+    const enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+    const teclaDown = enter.isDown || cursors.space.isDown || cursors.left.isDown
+        || cursors.right.isDown || cursors.down.isDown || cursors.up.isDown;
+    if (teclaDown) {
         ejecution = true;
 
     }
