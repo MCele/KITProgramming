@@ -360,15 +360,20 @@ async function create() {
     timedEvent = this.time.addEvent({ delay: 1000, callback: moveExecution, callbackScope: this, loop: true });
 }
 
-async function update() {
+function update() {
     const cursors = this.input.keyboard.createCursorKeys();
     const enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+    const mouseDown = game.input.mousePointer.isDown;
     const teclaDown = enter.isDown || cursors.space.isDown || cursors.left.isDown
         || cursors.right.isDown || cursors.down.isDown || cursors.up.isDown;
-    if (teclaDown) {
-        ejecution = true;
 
+    if (teclaDown || mouseDown) {
+        playWord();
     }
+}
+
+function playWord() {
+    ejecution = true;
 }
 
 async function selectMove(moves, contMoves) {
