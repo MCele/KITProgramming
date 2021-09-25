@@ -24,7 +24,7 @@ const scaleInit = [
   { name: forward, valor: { x: 2, y: 2, z: 2 } }
 ]
 
-// prbando contenido camera
+// probando contenido camera
 // let elem: any = document.querySelector('a-entity[camera]');
 // var camera = elem ? elem.components.camera.camera : null;
 // console.log("Camera => ", elem, camera);
@@ -186,10 +186,10 @@ export function cleanViewImages() {
 }
 
 async function createJson() {
-  moves.forEach((mov, index, moves) => {
+  moves.forEach((move, index, moves) => {
     jsonMoves.push({
       id: index,
-      move: mov,
+      move
     });
   });
   const strJson = JSON.stringify(jsonMoves);
@@ -198,10 +198,15 @@ async function createJson() {
 
 export async function playProgramContext() {
   if (nameWord) {
-    alert("Programa Generado correctamente");
-    await createJson()
+    alert("Programa Generado correctamente para ejecutarse en el Mundo " + nameWord);
+    await createJson();
+    const programLI = {
+      moves: jsonMoves,
+      mundo: `word${nameWord}`
+    };
     const url = `${URLWord}?moves=${JSON.stringify(jsonMoves)}&mundo=word${nameWord}`;
-    location.href = url;
+    const url2 = `${URLWord}?programLI=${JSON.stringify(programLI)}`;
+    location.href = url2;
   }
 }
 export function selectWord() {

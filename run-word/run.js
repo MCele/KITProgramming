@@ -13,12 +13,15 @@ const giro_izquierda = 'turn-left';
 
 var params = new URLSearchParams(location.search);
 
-const moves = JSON.parse(params.get('moves')) || [];
+// const moves = JSON.parse(params.get('moves')) || [];
+
+const program = JSON.parse(params.get('programLI'));
+const moves = program.moves || [];
 
 const wordDefault = "word1";
 
-let nameWord = String(params.get('mundo')) || wordDefault;
-
+// let nameWord = String(params.get('mundo')) || wordDefault;
+let nameWord = program?.mundo || wordDefault;
 
 // URL del mundo a ejecutar
 const URLMundo = () => (`./word/${nameWord}.json`);
@@ -162,7 +165,7 @@ const setOrientacion = async function (newMov) {
 
 const randomPos = (initObj, step, initR, finR) => initObj + step * (Phaser.Math.Between(initR, finR));
 
-
+// se generan estrellas en posiciones aleatorias (ya no se usa, eliminar)
 // async function posXYGenerate(arrayObj, initObj) {
 // let x = randomPos(initObj.x, velX, 1, 11); // ver!!! 11 podria ser el div de ancho mundo
 // let y = randomPos(initObj.y, velY, 1, 5);
