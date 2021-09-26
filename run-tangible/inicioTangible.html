@@ -50,11 +50,27 @@
       }
     });
 
-
   </script>
 </head>
+<style>
+  .buttons {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: right;
+    align-items: right;
+    background-color: transparent;
+  }
 
-<body style='margin : 0px'>
+  .program {
+    position: absolute;
+    width: 100%;
+    background-color: transparent;
+  }
+</style>
+
+<body style='margin : 0px;'>
   <a-scene embedded arjs='debugUIEnabled: false' vr-mode-ui="enabled: false">
     <a-assets>
       <img id="groundTexture" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png">
@@ -95,20 +111,20 @@
       </a-entity>
     </a-marker>
 
-    <div>
+    <div id="divCam">
       <!-- add a simple camera -->
-      <a-entity id="camera" camera></a-entity>
+      <a-entity id="camera" camera="userHeight: 1" position="0 12"></a-entity>
     </div>
+
   </a-scene>
-
-  <div class="d-flex p-3 mr-auto bg-secondary text-white">
-    <div class="media p-3">
+  <div class="d-flex p-3 mr-auto text-white buttons program">
+    <div class="media p-3 program">
       <p id="arrayImagesElement">
-
+        <!-- Completamos con imagenes del Programa leído -->
       </p>
     </div>
-    <div class="p-2 ml-auto btn-group-vertical">
-      <select id="selectWord" class="custom-select" onchange="selectWord()" style="margin-bottom: 10px;">
+    <div class="p-2 ml-auto btn-group-vertical buttons">
+      <select id="selectWord" class="btn btn-info custom-select" onchange="selectWord()" style="margin-bottom: 10px;">
         <option value="" disabled selected> Seleccione...</option>
         <option value="1">Mundo 1</option>
         <option value="2">Mundo 2</option>
@@ -121,9 +137,8 @@
       <button type="button" class="btn btn-danger" onclick="cleanViewImages()" style="margin-bottom: 10px;">
         Limpiar <i class="fas fa-trash-alt"></i></button>
     </div>
-
-
   </div>
+
 
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
