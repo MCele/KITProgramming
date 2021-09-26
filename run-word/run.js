@@ -2,6 +2,8 @@
 let origin = location.origin;
 
 let URLWord = 'https://localhost:8080';
+// let URLWord = '';
+
 
 let ejecution = false;
 
@@ -195,7 +197,7 @@ const randomPos = (initObj, step, initR, finR) => initObj + step * (Phaser.Math.
 
 function collectStar(player, star) {
     contStart++;
-    console.log("contStart => ", contStart);
+    // console.log("contStart => ", contStart);
     star.disableBody(true, true);
     scoreText.setText('Puntos: ' + contStart);
 }
@@ -215,7 +217,7 @@ async function create() {
     const initObj = { x: 50, y: 50 };
 
     const posiciones = await word.posiciones;
-    console.log(" ------- posiciones => ", posiciones.length);
+    // console.log(" ------- posiciones => ", posiciones.length);
     // definimos cantidad de estrellas, de acuerdo a la cantidad definida en el array del mundo elegido
     let stars = this.physics.add.group({
         key: 'star',
@@ -363,7 +365,9 @@ async function create() {
 function update() {
     const cursors = this.input.keyboard.createCursorKeys();
     const enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
-    const mouseDown = game.input.mousePointer.isDown;
+    const mouseDown = game.input.mousePointer.isDown || (game.input.touch && game.input.touch.isDown)
+        || (game.input.touch && game.input.touch.down) || (game.input.touching && game.input.touching.down)
+        || (game.input.activePointer.isDown);
     const teclaDown = enter.isDown || cursors.space.isDown || cursors.left.isDown
         || cursors.right.isDown || cursors.down.isDown || cursors.up.isDown;
 
@@ -380,7 +384,7 @@ async function selectMove(moves, contMoves) {
     let newMove;
     let anims = '';
     // solo al girar cambia la orientacion del agente
-    console.log("EJECUTANDO: ", moves[contMoves]['move']);
+    // console.log("EJECUTANDO: ", moves[contMoves]['move']);
     switch (moves[contMoves]['move']) {
         case retroceder: {
             let dirX = dirAgente.velX ? -dirAgente.velX : 0;
@@ -433,7 +437,7 @@ async function selectMove(moves, contMoves) {
         default:
             newMove = await setAnimsMove(0, 0, '');
     };
-    console.log("sprite: ", dirAgente, 'newMove: ', newMove);
+    // console.log("sprite: ", dirAgente, 'newMove: ', newMove);
     return newMove;
 }
 
@@ -449,7 +453,7 @@ async function setAnimsMove(dirX = 0, dirY = 0, anims = '') {
 async function moveExecution() {
     if (ejecution) {
         const moveUpdated = await selectMove(moves, contMoves); // corregir se podría enviar moves[contMoves]['move'] (1 param)
-        console.log("move => ", moveUpdated.dirX, moveUpdated.dirY, moveUpdated.anims);
+        // console.log("move => ", moveUpdated.dirX, moveUpdated.dirY, moveUpdated.anims);
         if (moves[contMoves] && !moves[contMoves]['ejecuted']) {
             player.setVelocityX(moveUpdated.dirX);
             player.setVelocityY(moveUpdated.dirY);
@@ -461,7 +465,7 @@ async function moveExecution() {
     } else {
         // si se ejecutaron todos los movimientos, se detiene el agente
         if (contMoves >= moves.length) {
-            console.log("JUEGO TERMINADO!!!", contMoves, moves.length);
+            // console.log("JUEGO TERMINADO!!!", contMoves, moves.length);
             player.setVelocityX(0);
             player.setVelocityY(0);
             player.anims.stop();
