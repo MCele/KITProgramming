@@ -1,10 +1,16 @@
-# KIT Programming: Kid Interactive Tangible Programming
+# KIT Programming
+### Kid Interactive Tangible Programming
 
-Herramienta para la Programación Tangible.
+![image](https://user-images.githubusercontent.com/19591224/145693582-fa1bc964-0e3f-47db-8ee2-58a6da7f09f5.png)
 
-Kit programming consta de 2 módulos:
-    - Módulo de Programación Tangible desarrollado en Typescript utilizando A-Frame y AR JS.
-    - Módulo de Ejecución de un programa tangible leído, que utliza una interfaz gráfica.
+
+### KIT programming es una herramienta para la Programación Tangible
+
+Consta de 2 módulos:
+      
+      - Módulo de Programación Tangible desarrollado en Typescript utilizando A-Frame y AR JS.
+      
+      - Módulo de Ejecución de un programa tangible leído, que utliza una interfaz gráfica.
 
 
 ### Instalación
@@ -15,7 +21,8 @@ Con Node:
     
     - Primero asegurate de tener instalado Node.
 
-    - Luego instalar las dependencias de Node dentro de las ubicaciones de cada módulo ./run-tangible y en  ./run-word
+    - Luego instalar las dependencias de Node dentro de las ubicaciones de cada módulo 
+    ./run-tangible y en  ./run-word
              npm install
    
 
@@ -32,9 +39,6 @@ Ejecuta la aplicación en un navegar:
 
 [__https://localhost:8080/__](https://localhost:8080/)
 
-If you wish to serve the site from a different port:
-
-    PORT=8000 npm start
 
 
 ## License
