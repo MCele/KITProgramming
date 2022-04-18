@@ -18,6 +18,14 @@
             })
         }
     });
+    AFRAME.registerComponent("descarga", {
+        init: function () {
+            this.el.addEventListener("click", (e) => {
+                console.log("click descargar");
+                location.href = "https://drive.google.com/drive/folders/15DAigiSHsFzMcI-Ys2E3l1QP-8NWnl7F?usp=sharing"
+            })
+        }
+    });
 </script>
 
 <body style='margin : 10px;background-color:rgba(215, 234, 235, 0.863);'>
@@ -29,6 +37,7 @@
 
     <div>
         <a-scene outline cursor="rayOrigin: mouse" style="margin: 0%; background-color: rgba(215, 234, 235, 0.74);">
+            <!-- Boton Play -->
             <a-assets>
                 <img id="botonPlay" class="img-fluid" src="./assets/img/botonPlay.png">
             </a-assets>
@@ -36,10 +45,18 @@
             <a-box src="#botonPlay" position="1 0.5 -2" rotation="0 0 0" color="rgba(215, 234, 235, 0.74)"
                 scale="1.1 0.4 0.1" metalness="0.1" foo>
             </a-box>
-
+            <!-- Fondo cuadricula -->
             <a-assets>
                 <img id="groundTexture" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png">
             </a-assets>
+
+            <!-- Boton Descargar -->
+            <a-assets>
+                <img id="botonDescargar" class="img-fluid" src="./assets/img/descargar.png">
+            </a-assets>
+            <a-box src="#botonDescargar" position="-1.9 0.5 -2" rotation="0 0 0" scale="1.1 0.3 0.1" metalness="0.1"
+                descarga>
+            </a-box>
 
             <!-- LOGO RA -->
             <a-assets>
